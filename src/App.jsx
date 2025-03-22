@@ -1,13 +1,39 @@
-import React from "react";
-import {createBrowserRouter} from "react-router";
+import React, { Children } from "react";
+import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router-dom";
+import Signup from "./pages/Signup";
+import ToastProvider from "./components/ToastProvider"
+import Login from "./pages/Login";
+import MainLayout from "./wrappers/MainLayout";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 
-const routes = [
+
+const routes =([
   {
-    path: "/",
-    element: <h1>HEllO</h1>,
+    path:"/",
+    element:<MainLayout/>,
+    children:[
+      {
+        path:"/",
+        element:<Home/>
+      },
+      {
+        path:"/profile",
+        element:<Profile/>
+      },
+    ]
   },
-];
+  {
+    path:'/signup',
+    element:<Signup />
+  },
+  {
+    path:'/login',
+    element:<Login />
+  },
+])
+
 
 const router = createBrowserRouter(routes, {
   future: {
@@ -20,11 +46,15 @@ const router = createBrowserRouter(routes, {
 });
 
 const App = () => {
-  return <RouterProvider
-   router={router}
-   future={{
-    v7_startTransition: true,
-   }} />;
+  return <>
+  <ToastProvider />
+    <RouterProvider
+      router={router}
+      future={{
+        v7_startTransition: true,
+      }}
+    />
+  </>
 };
 
 export default App;
